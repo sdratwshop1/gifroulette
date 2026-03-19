@@ -3,7 +3,6 @@
 const fs = require("fs");
 const path = require("path");
 const open = require("open");
-// const clipboardy = require("clipboardy");
 const https = require("https");
 
 require('dotenv').config();
@@ -97,18 +96,6 @@ function pickGif(keyword, gifs, history) {
     return selectedGif;
 }
 
-function downloadGif(url, path) {
-    return new Promise((resolve, reject) => {
-        const file = fs.createWriteStream(path);
-        https.get(url, (response) => {
-            response.pipe(file);
-            file.on("finish", () => {
-                file.close(resolve);
-            });
-        }).on("error", reject);
-    });
-}
-
 async function main() {
     const keyword = process.argv.slice(2).join(" ").trim();
 
@@ -135,9 +122,6 @@ async function main() {
 
     // Save the updated history before downloading and opening the GIF
     saveHistory(history);
-
-    // Download the GIF to a temporary file
-    await downloadGif(gifUrl, "gif.gif");
 
     // Opens the GIF in the default browser
     await open(gifUrl);
