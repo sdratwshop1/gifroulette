@@ -5,7 +5,9 @@ const path = require("path");
 const open = require("open");
 const https = require("https");
 
-require('dotenv').config();
+require('dotenv').config({
+    path: require('path').join(__dirname, '.env')
+});
 
 const API_KEY = process.env.GIPHY_API_KEY;
 const HISTORY_FILE = path.join(__dirname, "gif-history.json");
